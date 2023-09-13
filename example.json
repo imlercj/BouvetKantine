@@ -1,0 +1,20 @@
+{
+    "messageType": "single_ts",
+    "id": "4250E1D7",
+    "collector_id": "TAC-B",
+    "collector_serial": "051001866",
+    "collector_frm": "2.6",
+    "sensor_serial": "251001866G1",
+    "sensor_name": "inngang1",
+    "direction": "OUT",
+    "date": "2023-09-08",
+    "time": "11:19:17.499",
+    "five-min": 135,
+    "in_today": 201,
+    "out_today": 120,
+    "object_id": 429,
+    "object_speed": "2.7",
+    "last_5min_sum": 13,
+    "first_entry_time": "07:34:43",
+    "last_entry_time": "11:19:17"
+}
