@@ -42,7 +42,7 @@ def on_message(client, userdata, msg, postgres, watchdog_q):
 
 def main(q):
 
-    host = HOST_ADDRESS # "20.86.34.84"
+    host = HOST_ADDRESS
     username = MOSQUITTO_USERNAME
     password = MOSQUITTO_PASSWORD
     while True:
