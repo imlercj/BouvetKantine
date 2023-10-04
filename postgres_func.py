@@ -22,6 +22,24 @@ class Postgres:
         self.cursor = self.conn.cursor()
         self.errors = 0
 
+    def run_query(self, query):
+        # print output query to console
+        try:
+            if self.cursor.closed:
+                self.cursor = self.conn.cursor()
+
+            self.cursor.execute(query)
+            self.conn.commit()
+            results = self.cursor.fetchall()
+            for row in results:
+                print(row)
+            self.cursor.close()
+        except psycopg2.Error as e:
+            print(f"Error: {e}")
+            self.errors += 1
+            if self.errors > 10:
+                AssertionError("Too many errors")
+
     def insert_data(self, data_to_insert, query):
         try:
             

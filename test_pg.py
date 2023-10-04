@@ -7,6 +7,8 @@ passing = json.load(open("example.json", "r"))
 
 postgres = Postgres()
 
+query = """SELECT usename FROM pg_user WHERE usename = current_user;"""
+print(postgres.run_query(query))
 # passing
 sensor_name = passing["sensor_name"]
 direction = passing["direction"]
