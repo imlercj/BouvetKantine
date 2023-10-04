@@ -73,3 +73,38 @@ nano user_secrets.py
 ## insert secrets   --
 
 sudo systemctl enable python_mqtt
+
+
+
+## Postgress:
+sudo apt install wget ca-certificates
+
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+
+sudo apt update
+
+apt install postgresql postgresql-contrib
+
+sudo -u postgres psql
+
+# Timescaledb: https://docs.timescale.com/self-hosted/latest/install/installation-linux/
+apt install gnupg postgresql-common apt-transport-https lsb-release wget
+
+/usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+
+echo "deb https://packagecloud.io/timescale/timescaledb/ubuntu/ $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/timescaledb.list
+
+wget --quiet -O - https://packagecloud.io/timescale/timescaledb/gpgkey | sudo apt-key add -
+
+apt update
+
+apt install timescaledb-2-postgresql-14
+
+
+apt-get install postgresql-client
+
+systemctl restart postgresql
+
+sudo -u postgres psql

@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import sql
 
-from user_secrets import HOST_ADDRESS, POSTGRES_PASSWORD, POSTGRES_USERNAME
+from user_secrets import POSTGRES_ADDRESS, POSTGRES_PASSWORD, POSTGRES_USERNAME
 
 
 # Database connection parameters
@@ -11,7 +11,7 @@ class Postgres:
 
     def __init__(self) -> None:
         self.db_params = {
-                            'host': HOST_ADDRESS,
+                            'host': POSTGRES_ADDRESS,
                             'port': '5432',
                             'database': 'tsdb',
                             'user': POSTGRES_USERNAME,
@@ -67,6 +67,24 @@ class Postgres:
             """
             
             self.insert_data(data_to_insert, query)
+
+    def insert_data_menu(self, data_to_insert):
+        """
+        data_to_insert = [weeknumber, dayofweek, maincourse, soup, date, updatedat, date, maincourse, soup]
+        """
+
+        query = """
+            INSERT INTO menu (weeknumber, dayofweek, maincourse, soup, date, updatedat)
+            SELECT %s, %s, %s, %s, %s, %s
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM menu
+                WHERE date = %s
+                AND (maincourse = %s AND soup = %s)
+            );
+            """
+        
+        self.insert_data(data_to_insert, query)
 
 
     def create_cursor(self):
