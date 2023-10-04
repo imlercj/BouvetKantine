@@ -53,7 +53,7 @@ sudo nano /etc/systemd/system/python_mqtt.service
 Description=Get data from Mosquitto and stores it in azure
 
 [Service]
-ExecStart=/usr/bin/python3 /home/azureuser/TromsoLegevakt/main.py
+ExecStart=/usr/bin/python3 /home/christoph.imler/BouvetKantine/main.py
 Restart=always
 User=azureuser
 
