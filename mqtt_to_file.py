@@ -11,8 +11,6 @@ from user_secrets import (HOST_ADDRESS,
 
 
 
-
-
 # Define MQTT on_connect callback function
 def on_connect(client, userdata, flags, rc):
     topic = "smx/device/#"
@@ -29,14 +27,6 @@ def on_message(client, userdata, msg, postgres, watchdog_q):
         time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
         last_5min_sum = payload["last_5min_sum"]
         postgres.insert_data_passings([(time, direction, sensor_name, last_5min_sum)])
-
-    elif payload["messageType"] == "5_min_data":
-        sensor_name = payload["sensor_name"]
-        time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-        direction = payload["direction"]
-        visits = payload["visits"]
-        postgres.insert_data_passings_5min([(time, direction, sensor_name, visits)])
-
 
     watchdog_q.put("is alive")
 

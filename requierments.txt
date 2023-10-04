@@ -3,3 +3,5 @@ azure-storage-blob
 psycopg2-binary==2.9.7
 fastapi
 "uvicorn[standard]"
+requests
+pandas

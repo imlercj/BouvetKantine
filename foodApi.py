@@ -2,9 +2,16 @@ import requests
 import pandas as pd
 import re
 from typing import List, Tuple
+from datetime import date
+from isoweek import Week
 
 SOUP_STRINGS = ['suppe']
 DINNER_STRINGS = ['varmrett','hovedrett','varmmat']
+
+def get_date(x: pd.Series):
+    date_range = Week(date.today().year,x.WeekNumber).days()
+    ukedag_index = {'Mandag':0, 'Tirsdag':1, 'Onsdag':2, 'Torsdag':3, 'Fredag':4}
+    return date_range[ukedag_index[x.DayOfWeek]]
 
 def process_dish(dish: str, keywords: list) -> str:
     for keyword in keywords:
@@ -56,18 +63,20 @@ def process_data(data: dict) -> pd.DataFrame:
         hot_food, soup = get_types(ds)  # Note: function name changed to snake_case
         all_dishes.append([week, dayOfWeek, hot_food, soup])
 
-    return pd.DataFrame(all_dishes, columns=['WeekNumber', 'DayOfWeek', 'MainCourse', 'Soup'])
+    menu_df = pd.DataFrame(all_dishes, columns=['WeekNumber', 'DayOfWeek', 'MainCourse', 'Soup'])
+    menu_df['date'] = menu_df.apply(get_date, axis=1)
+    return menu_df
 
 
-def main():
+def menu():
     URL = 'https://i74qu6dp3m.execute-api.us-east-2.amazonaws.com/'
     data = fetch_data(URL)
     if data:
         df = process_data(data)
         # Do something with the data. Add a connection string or something like that. probably pyodbc?
-        print(df)
+        return df
 
 
 if __name__ == "__main__":
-    main()
+    print(menu())
 
