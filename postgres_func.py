@@ -70,7 +70,7 @@ class Postgres:
 
             # Define the SQL query to insert data into the hypertable
             query = """
-                INSERT INTO public.passings (time, direction, sensor_name, last_5min_sum)
+                INSERT INTO passings (time, direction, sensor_name, last_5min_sum)
                 VALUES (%s, %s, %s, %s)
             """
                 
